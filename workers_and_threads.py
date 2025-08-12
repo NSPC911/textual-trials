@@ -25,7 +25,7 @@ class Application(App):
     @on(Button.Pressed, "#thread")
     @work(exclusive=True, thread=True)
     def thread_runner(self, event:Button.Pressed):
-        self.app.call_from_thread(sleep, 1)
+        self.call_from_thread(sleep, 1)
         self.richlog.write("Thread completed!")
 
 Application().run()
