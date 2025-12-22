@@ -5,6 +5,60 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "httpx>=0.28.1",
     "textual-dev>=1.7.0",
     "textual[syntax]>=4.0.0",
 ]
+[dependency-groups]
+dev = [
+  "commitizen>=4.8.3",
+  "poethepoet>=0.36.0",
+  "ruff>=0.14.2",
+  "textual-dev>=1.7.0",
+  "ty==0.0.5",
+]
+
+[tool.poe.tasks]
+inspector = "inspector.py"
+borders = "borders.py"
+block_failed_input = "block_failed_input.py"
+multi_progress_bar_icons = "multi_progress_bar_icons.py"
+narrow_options_with_input = "narrow_options_with_input.py"
+optionlist_scuffed_options = "optionlist_scuffed_options.py"
+progress_bar_states = "progress_bar_states.py"
+push_screen_wait_thread = "push_screen_wait_thread.py"
+shake = "shake.py"
+toast_test = "toast_test.py"
+workers_and_threads = "workers_and_threads.py"
+
+[tool.ruff.lint]
+select = [
+  "ASYNC251",
+  "ANN",
+  "COM819",
+  "C400",
+  "DOC",
+  "D404",
+  "E",
+  "F",
+  "I",
+  "N801", "N802", "N805",
+  "PLE1142",
+  "Q",
+  "SIM",
+  "TD",
+  "W",
+]
+ignore = ["W505", "E501", "ANN002", "ANN003", "TD002", "TD003"]
+preview = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+preview = true
+
+[tool.ty.rules]
+possibly-missing-import = "ignore"
+unresolved-reference = "ignore" # handled by ruff
+unresolved-attribute = "ignore"
