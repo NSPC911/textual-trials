@@ -7,6 +7,7 @@ requires-python = ">=3.13"
 dependencies = [
     "httpx>=0.28.1",
     "textual-dev>=1.7.0",
+    "textual-theme-editor>=0.1.0",
     "textual[syntax]>=4.0.0",
 ]
 [dependency-groups]

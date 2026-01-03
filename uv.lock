@@ -862,6 +862,18 @@ syntax = [
 ]
 
 [[package]]
+name = "textual-colorpicker"
+version = "0.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "textual" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/a2/5e/deda4214e6bddb9c779d3a805f2021cdea74499a1f646d8bf64e84c15461/textual_colorpicker-0.1.0.tar.gz", hash = "sha256:c2996b0e486c0cbad24963522adf708e8e182776c0f7da0884cbed894a382966", size = 21870, upload-time = "2025-06-22T10:12:43.251Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ba/5e/e6f4341c7ae01f2a79e083be242aa2040d09c22435e0f94e3e3770dca14b/textual_colorpicker-0.1.0-py3-none-any.whl", hash = "sha256:7d034b789eb5954a7aafb725f81815d83c90a42cfa80a4c4a0cb698f34f4ed18", size = 23259, upload-time = "2025-06-22T10:12:41.709Z" },
+]
+
+[[package]]
 name = "textual-dev"
 version = "1.8.0"
 source = { registry = "https://pypi.org/simple" }
@@ -895,6 +907,21 @@ wheels = [
 ]
 
 [[package]]
+name = "textual-theme-editor"
+version = "0.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "textual" },
+    { name = "textual-colorpicker" },
+    { name = "tree-sitter" },
+    { name = "tree-sitter-python" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d5/5e/a8373ecf3619088bff6c047015c8723b870889b861aa7fba3fa6773c9ff0/textual_theme_editor-0.1.0.tar.gz", hash = "sha256:cc1453aec620430fe78cc20c59b103aff9faae310bd701443b5d64cb55ab0789", size = 18852, upload-time = "2025-07-07T16:26:06.047Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/21/5e/b2a295839e23e312d9034aa44f65615f8389f54d8731b8c3054ae09bc241/textual_theme_editor-0.1.0-py3-none-any.whl", hash = "sha256:fee48f891c33f71a87acf5cfae39cd9bb8afdb15f1917e8ad19fbdfbd03a7b02", size = 18933, upload-time = "2025-07-07T16:26:04.617Z" },
+]
+
+[[package]]
 name = "textual-trials"
 version = "0.1.0"
 source = { virtual = "." }
@@ -902,6 +929,7 @@ dependencies = [
     { name = "httpx" },
     { name = "textual", extra = ["syntax"] },
     { name = "textual-dev" },
+    { name = "textual-theme-editor" },
 ]
 
 [package.dev-dependencies]
@@ -918,6 +946,7 @@ requires-dist = [
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "textual", extras = ["syntax"], specifier = ">=4.0.0" },
     { name = "textual-dev", specifier = ">=1.7.0" },
+    { name = "textual-theme-editor", specifier = ">=0.1.0" },
 ]
 
 [package.metadata.requires-dev]
