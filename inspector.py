@@ -5,7 +5,7 @@ import inspect
 from importlib.metadata import version
 
 try:
-    import httpx
+    import httpx  # ty: ignore  # noqa
 
     HTTPX_AVAILABLE = True
 except ImportError:

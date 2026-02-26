@@ -1,3 +1,4 @@
+from typing import cast
 from rich.text import TextType
 from textual import events, on
 from textual.app import ComposeResult
@@ -119,7 +120,14 @@ class Inspector(HorizontalGroup):
                 yield VerticalResizeBar(tabarea)
                 with TabbedContent("CSS", "ID & Classes"):
                     with VerticalGroup(id="css"):
-                        yield TextArea(language="css", read_only=True, soft_wrap=False, show_line_numbers=True, compact=True, placeholder="No TCSS available")
+                        yield TextArea(
+                            language="css",
+                            read_only=True,
+                            soft_wrap=False,
+                            show_line_numbers=True,
+                            compact=True,
+                            placeholder="No TCSS available",
+                        )
                     with VerticalScroll(id="idandclasses"):
                         with HorizontalGroup(id="id"):
                             yield Label("ID")
@@ -216,7 +224,9 @@ class Inspector(HorizontalGroup):
                     event.node.data.classes
                 )
             # then css dump
-            self.query_one("#css > TextArea", TextArea).load_text(event.node.data.styles.base.css)
+            self.query_one("#css > TextArea", TextArea).load_text(
+                event.node.data.styles.base.css
+            )
 
     @on(Input.Changed, "#id > Input")
     @on(Input.Changed, "#classes > Input")
@@ -258,4 +268,4 @@ class Inspector(HorizontalGroup):
         if domtree.prev_hovered_index != -1 and hasattr(
             node := domtree.get_node_at_line(domtree.prev_hovered_index), "data"
         ):
-            node.data.remove_class("-highlight")
+            cast(DOMNode, node.data).remove_class("-highlight")

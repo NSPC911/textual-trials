@@ -22,7 +22,9 @@ starlight = [
 
 
 class NarrowOptionsWithInput(ModalScreen):
-    def __init__(self, options: list = [], placeholder: str = "Don't drop your jaw!", **kwargs) -> None:
+    def __init__(
+        self, options: list = [], placeholder: str = "Don't drop your jaw!", **kwargs
+    ) -> None:
         super().__init__(**kwargs)
         self.placeholder = placeholder
         self.options = options
@@ -86,6 +88,10 @@ class Application(App):
         yield Button("Show the improved optionlist")
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
-        self.push_screen(NarrowOptionsWithInput(starlight, "Starlight (Keep Me Afloat)"), lambda x: self.notify(str(x)))
+        self.push_screen(
+            NarrowOptionsWithInput(starlight, "Starlight (Keep Me Afloat)"),
+            lambda x: self.notify(str(x)),
+        )
+
 
 Application().run()

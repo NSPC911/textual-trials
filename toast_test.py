@@ -9,6 +9,9 @@ class Application(App):
         yield Button("Start Error", variant="error", id="error")
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
-        self.notify(f"Button with id {event.button.id} was pressed!", severity=event.button.id)
+        self.notify(
+            f"Button with id {event.button.id} was pressed!", severity=event.button.id
+        )
+
 
 Application().run()

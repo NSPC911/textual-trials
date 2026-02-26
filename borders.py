@@ -33,6 +33,7 @@ class AllBordersApp(App):
         background: green
     }
     """
+
     def compose(self):
         yield Grid(
             Label("ascii", id="ascii"),

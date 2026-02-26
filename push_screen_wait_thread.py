@@ -1,17 +1,18 @@
 import asyncio
 from random import randint
 
-from textual import on, events, work
+from textual import on, work
 from textual.app import App, ComposeResult
-from textual.containers import Grid, Container
+from textual.containers import Container, Grid
 from textual.screen import ModalScreen
 from textual.widgets import Button, Label, ProgressBar
 
-class Dismissable(ModalScreen):
+
+class Dismissible(ModalScreen):
     """Super simple screen that can be dismissed."""
 
     DEFAULT_CSS = """
-    Dismissable {
+    Dismissible {
         align: center middle
     }
     #dialog {
@@ -37,7 +38,7 @@ class Dismissable(ModalScreen):
     }
     """
 
-    def __init__(self, message: str, **kwargs):
+    def __init__(self, message: str, **kwargs) -> None:
         super().__init__(**kwargs)
         self.message = message
 
@@ -55,19 +56,22 @@ class Dismissable(ModalScreen):
         """Handle button presses."""
         self.dismiss()
 
+
 class TestApp(App):
-    def compose(self) -> None:
+    def compose(self) -> ComposeResult:
         yield Container()
         yield Button("test", id="test")
+
     @on(Button.Pressed, "#test")
     @work(thread=True)
     def if_button_pressed(self, event: Button.Pressed) -> None:
-        progress = ProgressBar(total=randint(1,50))
+        progress = ProgressBar(total=randint(1, 50))
         self.call_from_thread(self.mount, progress)
         while progress.percentage != 1:
             self.call_from_thread(progress.advance)
             self.call_from_thread(asyncio.sleep, 0.5)
-            if randint(1,3) == 1:
-                self.call_from_thread(self.push_screen_wait, Dismissable("hi"))
+            if randint(1, 3) == 1:
+                self.call_from_thread(self.push_screen_wait, Dismissible("hi"))
+
 
 TestApp().run()

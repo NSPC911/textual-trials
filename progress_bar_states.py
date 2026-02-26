@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import ProgressBar
 
+
 class Application(App):
     CSS = """
     .bar {
@@ -17,15 +18,19 @@ class Application(App):
       color: $error;
     }
     """
+
     def compose(self) -> ComposeResult:
         yield ProgressBar(total=None, id="indeterminate")
         yield ProgressBar(total=100, id="complete", classes="complete")
         yield ProgressBar(total=100, id="incomplete", classes="incomplete")
         yield ProgressBar(total=100, id="error", classes="error complete")
         yield ProgressBar(total=100, id="incompleteerror", classes="error incomplete")
+
     def on_mount(self) -> None:
         for widget in self.query("ProgressBar.incomplete"):
             widget.update(progress=50)
         for widget in self.query("ProgressBar.complete"):
             widget.update(progress=100)
+
+
 Application().run()

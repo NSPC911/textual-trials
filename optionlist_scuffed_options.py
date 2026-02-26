@@ -15,4 +15,5 @@ class Application(App):
             Option("Option 7"),
         )
 
+
 Application().run()

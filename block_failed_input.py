@@ -30,7 +30,7 @@ class ModalInput(ModalScreen):
                 compact=True,
                 valid_empty=False,
                 validators=self.validators,
-                validate_on=["changed", "submitted"],
+                validate_on=["changed", "submitted"]  # ty: ignore
             )
 
     @work(exclusive=True)
@@ -40,6 +40,7 @@ class ModalInput(ModalScreen):
             self.horizontal_group.border_subtitle = self.border_subtitle
         else:
             self.horizontal_group.classes = "invalid"
+            assert event.validation_result is not None
             try:
                 self.horizontal_group.border_subtitle = str(
                     event.validation_result.failure_descriptions[0]
@@ -77,6 +78,7 @@ class ModalInput(ModalScreen):
             event.stop()
             self.dismiss("")
 
+
 class Application(App):
     CSS = """
     ModalInput {
@@ -100,9 +102,14 @@ class Application(App):
       }
     }
     """
+
     def compose(self) -> ComposeResult:
         yield Button("Open an input dialog!")
+
     def on_button_pressed(self, event: Button.Pressed) -> None:
-        self.push_screen(ModalInput("What word do you start a greeting with?"), callback=self.notify)
+        self.push_screen(
+            ModalInput("What word do you start a greeting with?"), callback=self.notify
+        )  # ty: ignore
+
 
 Application().run()
