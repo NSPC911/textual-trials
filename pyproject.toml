@@ -20,15 +20,20 @@ dev = [
 ]
 
 [tool.poe.tasks]
-inspector = "inspector.py"
-borders = "borders.py"
 block_failed_input = "block_failed_input.py"
+borders = "borders.py"
+inspector = "inspector.py"
+loading_has_no_size = "loading_has_no_size.py"
 multi_progress_bar_icons = "multi_progress_bar_icons.py"
 narrow_options_with_input = "narrow_options_with_input.py"
 optionlist_scuffed_options = "optionlist_scuffed_options.py"
 progress_bar_states = "progress_bar_states.py"
+proof-that-on-mount-matters-sync-version = "proof-that-on-mount-matters-sync-version.py"
+proof-that-on-mount-matters-worker-version = "proof-that-on-mount-matters-worker-version.py"
 push_screen_wait_thread = "push_screen_wait_thread.py"
+resizebar = "resizebar.py"
 shake = "shake.py"
+threads_and_should_cancel = "threads_and_should_cancel.py"
 toast_test = "toast_test.py"
 workers_and_threads = "workers_and_threads.py"
 
