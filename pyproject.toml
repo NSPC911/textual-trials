@@ -22,6 +22,7 @@ dev = [
 [tool.poe.tasks]
 block_failed_input = "block_failed_input.py"
 inspector = "inspector/inspector.py"
+drag-and-drop = "drag-and-drop-test.py"
 loading_has_no_size = "loading_has_no_size.py"
 multi_progress_bar_icons = "progressbar/multi_progress_bar_icons.py"
 narrow_options_with_input = "narrow_options_with_input.py"
