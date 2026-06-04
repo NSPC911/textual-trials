@@ -1,7 +1,7 @@
 import time
 from collections.abc import Callable
 from functools import wraps
-from inspect import iscoroutinefunction
+from inspect import isawaitable, iscoroutinefunction
 from typing import Any
 
 from textual.dom import DOMNode
@@ -12,7 +12,7 @@ def throttle(delay: float) -> Callable[[Callable[..., Any]], Callable[..., Any]]
     """Leading-edge throttle with trailing-edge debounce for Textual message handlers.
 
     The first event in a burst passes immediately. Events within `delay` seconds
-    are blocked. The last blocked event fires after `delay * 1.1` seconds of silence.
+    are blocked. The last blocked event fires after `delay` seconds from the last allowed event.
 
     Returns:
         A decorator that wraps a Textual message handler (sync or async) with debounce logic.
@@ -21,9 +21,8 @@ def throttle(delay: float) -> Callable[[Callable[..., Any]], Callable[..., Any]]
     def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
         attr_last = f"_deb_last_{func.__name__}"
         attr_timer = f"_deb_timer_{func.__name__}"
-        is_async = iscoroutinefunction(func)
 
-        if is_async:
+        if iscoroutinefunction(func):
             @wraps(func)
             async def wrapper(self: DOMNode, event: Message, *args, **kwargs) -> None:
                 now = time.monotonic()
@@ -31,11 +30,15 @@ def throttle(delay: float) -> Callable[[Callable[..., Any]], Callable[..., Any]]
                 trailing_timer = getattr(self, attr_timer, None)
 
                 if now - last_passed >= delay:
+                    # run func
                     if trailing_timer is not None:
                         trailing_timer.stop()
                         setattr(self, attr_timer, None)
                     setattr(self, attr_last, now)
-                    await func(self, event, *args, **kwargs)
+                    # not sure how workers are handled
+                    obj = func(self, event, *args, **kwargs)
+                    if isawaitable(obj):
+                        await obj
                 else:
                     if trailing_timer is not None:
                         trailing_timer.stop()
@@ -47,7 +50,10 @@ def throttle(delay: float) -> Callable[[Callable[..., Any]], Callable[..., Any]]
                         setattr(self, attr_last, time.monotonic())
                         await func(self, captured, *args, **kwargs)
 
-                    setattr(self, attr_timer, self.set_timer(delay * 1.1, trailing))
+                    # Calculate remaining time until next allowed event
+                    time_since_last = now - last_passed
+                    remaining_delay = delay - time_since_last
+                    setattr(self, attr_timer, self.set_timer(remaining_delay, trailing))
 
             return wrapper
         else:
@@ -58,6 +64,7 @@ def throttle(delay: float) -> Callable[[Callable[..., Any]], Callable[..., Any]]
                 trailing_timer = getattr(self, attr_timer, None)
 
                 if now - last_passed >= delay:
+                    # run func
                     if trailing_timer is not None:
                         trailing_timer.stop()
                         setattr(self, attr_timer, None)
@@ -74,7 +81,10 @@ def throttle(delay: float) -> Callable[[Callable[..., Any]], Callable[..., Any]]
                         setattr(self, attr_last, time.monotonic())
                         func(self, captured, *args, **kwargs)
 
-                    setattr(self, attr_timer, self.set_timer(delay * 1.1, trailing))
+                    # Calculate remaining time until next allowed event
+                    time_since_last = now - last_passed
+                    remaining_delay = delay - time_since_last
+                    setattr(self, attr_timer, self.set_timer(remaining_delay, trailing))
 
             return wrapper
 
