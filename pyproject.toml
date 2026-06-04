@@ -8,15 +8,15 @@ dependencies = [
     "httpx>=0.28.1",
     "textual-dev>=1.7.0",
     "textual-theme-editor>=0.1.0",
-    "textual[syntax]>=4.0.0",
+    "textual~=7.0",
 ]
 [dependency-groups]
 dev = [
   "commitizen>=4.8.3",
   "poethepoet>=0.36.0",
-  "ruff>=0.14.2",
+  "ruff>=0.15.0",
   "textual-dev>=1.7.0",
-  "ty==0.0.5",
+  "ty==0.0.20",
 ]
 
 [tool.poe.tasks]
@@ -36,6 +36,8 @@ shake = "shake.py"
 threads_and_should_cancel = "threads-and-stuff/threads_and_should_cancel.py"
 toast_test = "toast_test.py"
 workers_and_threads = "threads-and-stuff/workers_and_threads.py"
+throttled = "throttler/throttled.py"
+no-throttle = "throttler/no_throttle.py"
 
 [tool.ruff.lint]
 select = [
