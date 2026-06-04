@@ -30,7 +30,7 @@ class ModalInput(ModalScreen):
                 compact=True,
                 valid_empty=False,
                 validators=self.validators,
-                validate_on=["changed", "submitted"]  # ty: ignore
+                validate_on=["changed", "submitted"]
             )
 
     @work(exclusive=True)
@@ -40,7 +40,9 @@ class ModalInput(ModalScreen):
             self.horizontal_group.border_subtitle = self.border_subtitle
         else:
             self.horizontal_group.classes = "invalid"
-            assert event.validation_result is not None
+            if event.validation_result is None or event.value == "":
+                self.horizontal_group.border_subtitle = "The word cannot be empty!"
+                return
             try:
                 self.horizontal_group.border_subtitle = str(
                     event.validation_result.failure_descriptions[0]
