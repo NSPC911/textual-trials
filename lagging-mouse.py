@@ -22,7 +22,7 @@ mouse moves.
 Reproduce:
     python lagging-mouse.py
     Move the mouse around the OptionList and watch the counter climb.
-    Set GROUPED = False (same declarations, :hover split into its own rule)
+    python lagging-mouse.py --split
     and the counter stays at zero.
 """
 
@@ -35,7 +35,6 @@ from textual.dom import DOMNode
 from textual.widgets import Button, Label, OptionList
 
 GROUPED = True  # False = identical styling, :hover in its own rule block
-BULK_RULES = 1000  # simulates a real app's stylesheet size (rovr has ~1000+ rules)
 
 HOVER_CSS_GROUPED = """
     #footer > *,
@@ -53,13 +52,6 @@ HOVER_CSS_SPLIT = """
     }
 """
 
-# Candidate rules for OptionList that never match (no .bulk-N ancestor exists).
-# Each style re-application must still consider all of them, once per
-# component class — this is the cost multiplier, not the cause.
-BULK_CSS = "\n".join(
-    f".bulk-{n} OptionList {{ color: red; }}" for n in range(BULK_RULES)
-)
-
 if __name__ == "__main__":
     import argparse
 
@@ -75,7 +67,6 @@ class LaggingMouseApp(App):
     #footer {{ height: 3; dock: bottom; }}
     #status {{ width: 1fr; content-align: right middle; }}
     {HOVER_CSS_GROUPED if GROUPED else HOVER_CSS_SPLIT}
-    {BULK_CSS}
     """
 
     def compose(self) -> ComposeResult:
@@ -99,7 +90,7 @@ class LaggingMouseApp(App):
                 app.restyles += 1
                 app.show_status()
 
-        DOMNode.update_node_styles = counted
+        DOMNode.update_node_styles = counted  # ty: ignore[invalid-assignment]
 
     def on_ready(self) -> None:
         self.counting = True
