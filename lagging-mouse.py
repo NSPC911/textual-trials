@@ -88,7 +88,7 @@ class LaggingMouseApp(App):
             if app.counting:
                 app.restyle_seconds += time.perf_counter() - start
                 app.restyles += 1
-                app.show_status()
+                app.call_next(app.show_status)
 
         DOMNode.update_node_styles = counted  # ty: ignore[invalid-assignment]
 
@@ -111,18 +111,3 @@ class LaggingMouseApp(App):
 
 if __name__ == "__main__":
     LaggingMouseApp().run()
-
-
-"""
-Fix for this issue is to monkey patch the App class
-
-    def _set_mouse_over(
-        self, widget: Widget | None, hover_widget: Widget | None
-    ) -> None:
-        # Textual re-applies hover styles twice per MouseMove even when the
-        # hovered widget hasn't changed, which floods the message queue when a
-        # custom stylesheet marks large containers as hover-styled
-        if widget is self.mouse_over and hover_widget is self.hover_over:
-            return
-        super()._set_mouse_over(widget, hover_widget)
-"""
