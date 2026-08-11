@@ -10,7 +10,7 @@ from textual.widgets import Button, Header, RichLog
 INSTRUCTIONS = """\
 [u]Press some Mouse buttons![/]
 
-To quit the app press [b]ctrl+c[/b] [i]twice[/i] or press the Quit button below.\
+To quit the app press [b]ctrl+q[/b] or press the Quit button below.\
 """
 
 
