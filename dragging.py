@@ -1,3 +1,4 @@
+import contextlib
 from random import randint
 
 from textual import events, on, work
@@ -6,7 +7,6 @@ from textual.containers import Container, Horizontal
 from textual.css.query import NoMatches
 from textual.widgets import SelectionList, Static
 from textual.widgets.selection_list import Selection
-import contextlib
 
 
 def randid() -> str:
@@ -28,6 +28,7 @@ class Application(App):
     #popup {
         layer: overlay;
         width: auto;
+        border: round $accent
     }
     """
 
@@ -92,10 +93,12 @@ class Application(App):
         if self.was_mouse_down_on_playlist:
             if not self.query("#popup"):
                 playlist = self.query_one("#playlist", SelectionList)
+                if len(songs := playlist.selected) < 1:
+                    return
                 await self.mount(
-                    popup := Static(f"{len(playlist.selected)} songs", id="popup")
+                    popup := Static(f"{len(songs)} songs", id="popup")
                 )
-                self.songs_to_drop = playlist.selected
+                self.songs_to_drop = songs
             else:
                 popup = self.query_one("#popup", Static)
             popup.offset = (event.screen_x, event.screen_y)
