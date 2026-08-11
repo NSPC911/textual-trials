@@ -1,7 +1,7 @@
 from textual.app import App, ComposeResult
+from textual.color import Gradient
 from textual.renderables.bar import Bar as BarRenderable
 from textual.widgets import ProgressBar
-from textual.color import Gradient
 
 
 class SignsRenderable(BarRenderable):
