@@ -64,7 +64,9 @@ class BorderSelectionApp(App[None]):
     """
 
     def compose(self) -> ComposeResult:
-        yield BorderSelectionList().set_options(Selection(name := faker.Faker().name(), value=name) for _ in range(20))
+        yield BorderSelectionList().set_options(
+            Selection(name := faker.Faker().name(), value=name) for _ in range(20)
+        )
         yield Footer()
 
 

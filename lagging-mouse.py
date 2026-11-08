@@ -55,8 +55,12 @@ HOVER_CSS_SPLIT = """
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="MRE for Textual hover style performance issue")
-    parser.add_argument("--split", action="store_true", help="Use split CSS rules instead of grouped")
+    parser = argparse.ArgumentParser(
+        description="MRE for Textual hover style performance issue"
+    )
+    parser.add_argument(
+        "--split", action="store_true", help="Use split CSS rules instead of grouped"
+    )
     if (args := parser.parse_args()).split:
         GROUPED = False
 

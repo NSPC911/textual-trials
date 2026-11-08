@@ -30,7 +30,7 @@ class ModalInput(ModalScreen):
                 compact=True,
                 valid_empty=False,
                 validators=self.validators,
-                validate_on=["changed", "submitted"]
+                validate_on=["changed", "submitted"],
             )
 
     @work(exclusive=True)

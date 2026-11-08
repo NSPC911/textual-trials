@@ -23,6 +23,7 @@ def throttle(delay: float) -> Callable[[Callable[..., Any]], Callable[..., Any]]
         attr_timer = f"_deb_timer_{func.__name__}"
 
         if iscoroutinefunction(func):
+
             @wraps(func)
             async def wrapper(self: DOMNode, event: Message, *args, **kwargs) -> None:
                 now = time.monotonic()
@@ -57,6 +58,7 @@ def throttle(delay: float) -> Callable[[Callable[..., Any]], Callable[..., Any]]
 
             return wrapper
         else:
+
             @wraps(func)
             def wrapper(self: DOMNode, event: Message, *args, **kwargs) -> None:
                 now = time.monotonic()

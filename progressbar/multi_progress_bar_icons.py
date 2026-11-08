@@ -17,9 +17,9 @@ class ArrowsRenderable(BarRenderable):
 
 
 class ThickBarRenderable(BarRenderable):
-    HALF_BAR_LEFT = "▐"
-    BAR = "█"
-    HALF_BAR_RIGHT = "▌"
+    HALF_BAR_LEFT = "𜴡"
+    BAR = "🮅"
+    HALF_BAR_RIGHT = "𜴍"
 
 
 class SlashBarRenderable(BarRenderable):

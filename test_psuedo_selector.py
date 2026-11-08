@@ -16,6 +16,12 @@ class Application(App):
             return None
 
     def on_mount(self) -> None:
-        self.set_interval(1, lambda: self.richlog.write(f"Button query returned = {self.doaquery('*:focus')}"))
+        self.set_interval(
+            1,
+            lambda: self.richlog.write(
+                f"Button query returned = {self.doaquery('*:focus')}"
+            ),
+        )
+
 
 Application().run()

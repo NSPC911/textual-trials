@@ -52,12 +52,30 @@ class Application(App):
                     id=randid(),
                     value="uptown_funk",
                 ),
-                Selection("Senorita - Shawn Mendes & Camila Cabello", id=randid(), value="senorita"),
-                Selection("Old Town Road - Lil Nas X", id=randid(), value="old_town_road"),
-                Selection("Havana - Camila Cabello ft. Young Thug", id=randid(), value="havana"),
-                Selection("Rockstar - Post Malone ft. 21 Savage", id=randid(), value="rockstar"),
-                Selection("Closer - The Chainsmokers ft. Halsey", id=randid(), value="closer"),
-                Selection("Sunflower - Post Malone & Swae Lee", id=randid(), value="sunflower"),
+                Selection(
+                    "Senorita - Shawn Mendes & Camila Cabello",
+                    id=randid(),
+                    value="senorita",
+                ),
+                Selection(
+                    "Old Town Road - Lil Nas X", id=randid(), value="old_town_road"
+                ),
+                Selection(
+                    "Havana - Camila Cabello ft. Young Thug",
+                    id=randid(),
+                    value="havana",
+                ),
+                Selection(
+                    "Rockstar - Post Malone ft. 21 Savage",
+                    id=randid(),
+                    value="rockstar",
+                ),
+                Selection(
+                    "Closer - The Chainsmokers ft. Halsey", id=randid(), value="closer"
+                ),
+                Selection(
+                    "Sunflower - Post Malone & Swae Lee", id=randid(), value="sunflower"
+                ),
                 Selection("Animals - Martin Garrix", id=randid(), value="animals"),
                 id="playlist",
             )
@@ -81,7 +99,10 @@ class Application(App):
         self.call_after_refresh(self.handle_drop, event)
 
     def handle_drop(self, event: events.MouseUp) -> None:
-        if self.screen.get_widget_at(event.screen_x, event.screen_y)[0].id == "recipient":
+        if (
+            self.screen.get_widget_at(event.screen_x, event.screen_y)[0].id
+            == "recipient"
+        ):
             self.query_one("#recipient > Static", Static).update(
                 f"{len(self.query_one('#playlist').selected)} songs",
             )
@@ -95,9 +116,7 @@ class Application(App):
                 playlist = self.query_one("#playlist", SelectionList)
                 if len(songs := playlist.selected) < 1:
                     return
-                await self.mount(
-                    popup := Static(f"{len(songs)} songs", id="popup")
-                )
+                await self.mount(popup := Static(f"{len(songs)} songs", id="popup"))
                 self.songs_to_drop = songs
             else:
                 popup = self.query_one("#popup", Static)

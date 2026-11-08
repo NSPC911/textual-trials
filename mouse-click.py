@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from rich.panel import Panel
 from rich.text import Text
-from textual import events
+from textual import events, on
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal
 from textual.widgets import Button, Header, RichLog
@@ -40,9 +40,14 @@ class KeysApp(App[None]):
         )
 
     def on_ready(self) -> None:
-        self.query_one(RichLog).write(Panel(Text.from_markup(INSTRUCTIONS)), expand=True)
+        self.query_one(RichLog).write(
+            Panel(Text.from_markup(INSTRUCTIONS)), expand=True
+        )
 
-    def on_click(self, event: events.Click) -> None:
+    @on(events.Click)
+    @on(events.MouseDown)
+    @on(events.MouseUp)
+    def on_click(self, event: events.MouseEvent) -> None:
         self.query_one(RichLog).write(event)
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
